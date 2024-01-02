@@ -27,15 +27,8 @@ async def change_stream_task():
                 channel_id = 779388088706662463  # Replace with your channel ID
                 channel = bot.get_channel(channel_id)
 
-                itemOwner = new_entry["owner"]
-                product = new_entry["product"]
-                productName = product["productName"]
-
-
-                stringBuilder = print("Item Owner: ",itemOwner,"\n","Product: ", productName)
-
                 if channel:
-                    await channel.send(f'New entry added: {stringBuilder}')
+                    await channel.send(f'New entry added: {new_entry}')
 
     except OperationFailure as e:
         print(f'MongoDB OperationFailure: {e}')
@@ -45,10 +38,6 @@ async def on_ready():
     print(f'Logged in as {bot.user.name}')
     asyncio.create_task(change_stream_task())
 
-@bot.event
-async def on_message(message):
-    # Your message handling logic here
-    await bot.process_commands(message)
 
 @bot.command()
 async def ping(ctx):
