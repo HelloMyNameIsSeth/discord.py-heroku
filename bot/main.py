@@ -28,7 +28,9 @@ async def change_stream_task():
                 channel = bot.get_channel(channel_id)
 
                 itemOwner = new_entry["owner"]
-                productName = new_entry["productName"]
+                product = new_entry["product"]
+                productName = product["productName"]
+
 
                 stringBuilder = print("Item Owner: ",itemOwner,"\n","Product: ", productName)
 
