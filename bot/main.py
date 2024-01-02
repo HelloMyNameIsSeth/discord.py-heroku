@@ -16,13 +16,16 @@ collection = database['orders']
 
 @bot.event
 async def on_ready():
+    print(f'Logged in as {bot.user.name}')
     try:
         # Start the change stream
         change_stream = collection.watch(full_document='updateLookup')
-        async for change in change_stream:
+
+        while True:
+            change = change_stream.next()
             if change['operationType'] == 'insert':
                 new_entry = change['fullDocument']
-                channel_id = 779388088706662463  # Replace with your channel ID
+                channel_id = 325858295527243776
                 channel = bot.get_channel(channel_id)
 
                 if channel:
