@@ -2,6 +2,7 @@ import discord
 import os
 import pymongo
 from discord.ext import commands
+from pymongo.errors import OperationFailure
 
 intents = discord.Intents.default()
 intents.members = True
@@ -15,21 +16,25 @@ collection = database['orders']
 
 @bot.event
 async def on_ready():
-    print(f'Logged in as {bot.user.name}({bot.user.id})')
+    try:
+        # Start the change stream
+        change_stream = collection.watch(full_document='updateLookup')
+        async for change in change_stream:
+            if change['operationType'] == 'insert':
+                new_entry = change['fullDocument']
+                channel_id = 779388088706662463  # Replace with your channel ID
+                channel = bot.get_channel(channel_id)
+
+                if channel:
+                    await channel.send(f'New entry added: {new_entry}')
+
+    except OperationFailure as e:
+        print(f'MongoDB OperationFailure: {e}')
 
 @bot.command()
 async def ping(ctx):
     await ctx.send('pong')
 
-@collection.watch()
-async def on_collection_change(change):
-    if change['operationType'] == 'insert':
-        new_entry = change['fullDocument']
-        channel_id = '779388088706662463'  # Replace with your channel ID
-        channel = bot.get_channel(channel_id)
-
-        if channel:
-            await channel.send(f'New entry added: {new_entry}')
 
 if __name__ == '__main__':
     bot.run(os.getenv('DISCORD_TOKEN'))
