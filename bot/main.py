@@ -113,16 +113,9 @@ async def on_message(message):
                 rate = x["rate"]
                 string = string + "\n" + "Address: " + str(address) + "Rate: " + str(rate)
                 
-            embed = discord.Embed(
-            title="Title of the Embed",
-            description="Description of the Embed",
-            color=discord.Color.blue()
-            )
-            embed.add_field(name="Field Name", value=string, inline=False)
-            embed.set_footer(text="Footer text")
-            
-            
-            await message.channel.send(string)
+            message_chunks = chunk_string(string, 1900)
+            await send_messages(message.channel,message_chunks)
+        
 
 if __name__ == '__main__':
     bot.run(os.getenv('DISCORD_TOKEN'))
