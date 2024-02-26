@@ -111,7 +111,7 @@ async def on_message(message):
             for x in listed:
                 address = x["address"]
                 rate = x["rate"]
-                string = string + "\n" + "Address: " + str(address) + "Rate: " + str(rate)
+                string = string + "\n" + "Address: " + str(address) + " Rate: " + str(rate)
                 
             message_chunks = chunk_string(string, 1900)
             await send_messages(message.channel,message_chunks)
