@@ -7,6 +7,7 @@ from openai import OpenAI
 import asyncio
 import json
 import requests
+from listings import totalListed
 
 intents = discord.Intents.default()
 intents.members = True
@@ -50,10 +51,6 @@ async def on_ready():
     print(f'Logged in as {bot.user.name}')
     #asyncio.create_task(change_stream_task())
 
-
-@bot.command()
-async def ping(ctx):
-    await ctx.send('pong')
 
 async def send_messages(channel, messages):
     for message in messages:
@@ -106,6 +103,21 @@ async def on_message(message):
         await send_messages(current_channel, message_chunks)
 
         
+@bot.event
+async def on_message(message):
+    if message.content.lower().startswith('/listed'):
+            listed = totalListed()
+
+            embed = discord.Embed(
+            title="Title of the Embed",
+            description="Description of the Embed",
+            color=discord.Color.blue()
+            )
+            embed.add_field(name="Field Name", value=listed, inline=False)
+            embed.set_footer(text="Footer text")
+            
+            
+            await message.channel.send(embed=embed)
 
 if __name__ == '__main__':
     bot.run(os.getenv('DISCORD_TOKEN'))
