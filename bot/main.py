@@ -116,7 +116,7 @@ async def on_message(message):
             description="Description of the Embed",
             color=discord.Color.blue()
             )
-            embed.add_field(name="Field Name", value=listed, inline=False)
+            embed.add_field(name="Field Name", value="test", inline=False)
             embed.set_footer(text="Footer text")
             
             
