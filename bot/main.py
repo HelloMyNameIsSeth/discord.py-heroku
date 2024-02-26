@@ -109,7 +109,9 @@ async def on_message(message):
             listed = totalListed()
             string = ""
             for x in listed:
-                string = string + " " + x
+                address = x["address"]
+                rate = x["rate"]
+                string = string + "\n" + "Address: " + address + "Rate: " + rate
                 
             embed = discord.Embed(
             title="Title of the Embed",
