@@ -122,7 +122,7 @@ async def on_message(message):
             embed.set_footer(text="Footer text")
             
             
-            await message.channel.send(embed=embed)
+            await message.channel.send(string)
 
 if __name__ == '__main__':
     bot.run(os.getenv('DISCORD_TOKEN'))
