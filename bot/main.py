@@ -107,7 +107,10 @@ async def on_message(message):
 async def on_message(message):
     if message.content.lower().startswith('/listed'):
             listed = totalListed()
-
+            string = ""
+            for x in listed:
+                string = string + " " + x
+                
             embed = discord.Embed(
             title="Title of the Embed",
             description="Description of the Embed",
