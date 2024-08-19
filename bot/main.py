@@ -24,6 +24,11 @@ steam_key = os.getenv('STEAM_API_KEY')
 database = mongo_client['LongLostStakingDatabase']
 collection = database['orders']
 
+TARGETUSER = 120174219853037568
+CUSTOM_EMOJI_ID = 1237289837569249320
+CUSTOM_EMOJI_NAME = 'jesse'
+
+
 
 def chunk_string(s, chunk_size):
     return [s[i:i + chunk_size] for i in range(0, len(s), chunk_size)]
@@ -51,6 +56,16 @@ async def on_ready():
     print(f'Logged in as {bot.user.name}')
     #asyncio.create_task(change_stream_task())
 
+@bot.event
+async def on_message(message):
+    # Check if the message is sent by the target user
+    if message.author.id == TARGETUSER:
+        custom_emoji = f'<:{CUSTOM_EMOJI_NAME}:{CUSTOM_EMOJI_ID}>'
+        # React to the message with the custom emoji
+        await message.add_reaction(custom_emoji)
+    
+    # Process commands if any
+    await bot.process_commands(message)
 
 async def send_messages(channel, messages):
     for message in messages:
