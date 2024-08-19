@@ -56,17 +56,6 @@ async def on_ready():
     print(f'Logged in as {bot.user.name}')
     #asyncio.create_task(change_stream_task())
 
-@bot.event
-async def on_message(message):
-    # Check if the message is sent by the target user
-    if message.author.id == TARGETUSER:
-        print("WE GOT HERE LADS")
-        custom_emoji = f'<:{CUSTOM_EMOJI_NAME}:{CUSTOM_EMOJI_ID}>'
-        # React to the message with the custom emoji
-        await message.add_reaction(custom_emoji)
-    
-    # Process commands if any
-    await bot.process_commands(message)
 
 async def send_messages(channel, messages):
     for message in messages:
@@ -74,6 +63,14 @@ async def send_messages(channel, messages):
 
 @bot.event
 async def on_message(message):
+
+    # Check if the message is sent by the target user
+    print("test")
+    if message.author.id == TARGETUSER:
+        print("WE GOT HERE LADS")
+        custom_emoji = f'<:{CUSTOM_EMOJI_NAME}:{CUSTOM_EMOJI_ID}>'
+        # React to the message with the custom emoji
+        await message.add_reaction(custom_emoji)
     
     if message.content.lower().startswith('/game'):
         msg = message.content[5:]
