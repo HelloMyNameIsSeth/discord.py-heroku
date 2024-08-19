@@ -24,7 +24,7 @@ steam_key = os.getenv('STEAM_API_KEY')
 database = mongo_client['LongLostStakingDatabase']
 collection = database['orders']
 
-TARGETUSER = 120174219853037568
+TARGETUSER = 218623043096805377
 CUSTOM_EMOJI_ID = 1237289837569249320
 CUSTOM_EMOJI_NAME = 'jesse'
 
