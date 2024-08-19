@@ -56,11 +56,6 @@ async def on_ready():
     print(f'Logged in as {bot.user.name}')
     #asyncio.create_task(change_stream_task())
 
-
-async def send_messages(channel, messages):
-    for message in messages:
-        await channel.send(message)
-
 @bot.event
 async def on_message(message):
 
@@ -71,63 +66,6 @@ async def on_message(message):
         custom_emoji = f'<:{CUSTOM_EMOJI_NAME}:{CUSTOM_EMOJI_ID}>'
         # React to the message with the custom emoji
         await message.add_reaction(custom_emoji)
-    
-    if message.content.lower().startswith('/game'):
-        msg = message.content[5:]
-
-        current_channel = message.channel
-        # To bug if input has no space
-        if msg.startswith(' '):
-            msg = msg[1:]
-        
-        #with open('data.json', 'r') as file:
-        #    parsed_data = json.load(file)
-
-        steamlink = f"http://api.steampowered.com/ISteamNews/GetNewsForApp/v0002/?appid={msg}&count=5&maxlength=5000&feeds=steam_community_announcements&format=json"
-        
-        response = requests.get(steamlink)
-        if response.status_code == 200:
-            data = response.json()
-            news_items = data.get('appnews', {}).get('newsitems', [])
-            news_strings = []
-            
-            for news_item in news_items:
-                news_string = f"Title: {news_item.get('title')}\nContents: {news_item.get('contents')}\n\n"
-                news_strings.append(news_string)
-        
-        else:
-            print(f"Error: {response.status_code}")
-            await message.channel.send("Error with the steam database: "+response.status_code)
-
-
-        result_string = ''.join(news_strings)
-
-        completion = client.chat.completions.create(
-            model="gpt-3.5-turbo",
-            messages=[
-                {"role": "user", "content": "Based on the title and content in"+result_string+" with a focus on the words 'updates' or 'patches' can you generate a summary in dotpoints of all the changes that have happened. If there are no updates please summarize what information that is avaliable and specify that there are no updates"}
-            ]
-            )
-        completion_content = completion.choices[0].message.content
-        print(completion_content)
-        message_chunks = chunk_string(completion_content, 1900)
-        for x in message_chunks:
-            print(x)
-        await send_messages(current_channel, message_chunks)
-
-        
-@bot.event
-async def on_message(message):
-    if message.content.lower().startswith('/listed'):
-            listed = totalListed()
-            string = ""
-            for x in listed:
-                address = x["address"]
-                rate = x["rate"]
-                string = string + "\n" + "Address: " + str(address) + " Rate: " + str(rate)
-                
-            message_chunks = chunk_string(string, 1900)
-            await send_messages(message.channel,message_chunks)
         
 
 if __name__ == '__main__':
