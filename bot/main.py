@@ -61,9 +61,10 @@ async def on_message(message):
 
     # Check if the message is sent by the target user
     print("test")
-    custom_emoji = f'<:{CUSTOM_EMOJI_NAME}:{CUSTOM_EMOJI_ID}>'
-        # React to the message with the custom emoji
-    await message.add_reaction(custom_emoji)
+    if message.author.id == TARGETUSER:
+        custom_emoji = f'<:{CUSTOM_EMOJI_NAME}:{CUSTOM_EMOJI_ID}>'
+            # React to the message with the custom emoji
+        await message.add_reaction(custom_emoji)
         
 
 if __name__ == '__main__':
