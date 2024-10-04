@@ -65,7 +65,17 @@ async def on_message(message):
         custom_emoji = f'<:{CUSTOM_EMOJI_NAME}:{CUSTOM_EMOJI_ID}>'
             # React to the message with the custom emoji
         await message.add_reaction(custom_emoji)
-        
+
+CHANNEL_ID = 1187693294889750591
+
+@bot.command()
+async def count_members(ctx):
+    channel = bot.get_channel(CHANNEL_ID)
+    if channel is not None:
+        member_count = len(channel.members)
+        await ctx.send(f'There are currently {member_count} members in the channel.')
+    else:
+        await ctx.send('Channel not found.')
 
 if __name__ == '__main__':
     bot.run(os.getenv('DISCORD_TOKEN'))
