@@ -66,7 +66,7 @@ async def on_message(message):
             # React to the message with the custom emoji
         await message.add_reaction(custom_emoji)
 
-CHANNEL_ID = 1187693294889750591
+CHANNEL_ID = 1124164564028772385
 
 @bot.command()
 async def count_members(ctx):
