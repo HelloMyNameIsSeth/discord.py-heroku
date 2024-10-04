@@ -69,7 +69,7 @@ async def on_message(message):
 CHANNEL_ID = 1124164564028772385
 
 @bot.command()
-async def count_members(ctx):
+async def count(ctx):
     channel = bot.get_channel(CHANNEL_ID)
     if channel is not None:
         member_count = len(channel.members)
