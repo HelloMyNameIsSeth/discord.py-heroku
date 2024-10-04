@@ -55,11 +55,12 @@ async def change_stream_task():
 async def on_ready():
     print(f'Logged in as {bot.user.name}')
     #asyncio.create_task(change_stream_task())
-    
+
 CHANNEL_ID = 1124164564028772385
 
 @bot.command()
 async def count(ctx):
+    print("TEST")
     channel = bot.get_channel(CHANNEL_ID)
     if channel is not None:
         member_count = len(channel.members)
